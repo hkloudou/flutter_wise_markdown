@@ -161,9 +161,11 @@ class _MarkDownPageState extends State<MarkDownPage> {
       obj = RefreshIndicator(
         key: _refreshKey,
         // onRefresh: null,
-        onRefresh: () =>
-            WiseLaunchAdapter.onUrlFetchRequest(widget.url, _cancelToken)
-                .then((value) {
+        onRefresh: () => WiseLaunchAdapter.onUrlFetchRequest(
+          url: widget.url,
+          cancelToken: _cancelToken,
+          refreshKey: _refreshKey,
+        ).then((value) {
           if (mounted && !_cancelToken.isCancelled) {
             setState(() {
               _con = value;

@@ -7,11 +7,12 @@
 // import 'package:robot/uikit/MarkDownPage.dart';
 // import 'package:url_launcher/url_launcher.dart';
 part of flutter_wise_markdown;
-// var onDataRefresh = FunctionFuture<String>()
 
+// var onDataRefresh = FunctionFuture<String>()
+// typedef Future<String> Function({CancelToken? cancelToken});
 class WiseLaunchAdapter {
-  static Future<String> Function() onUrlFetchRequest =
-      () => Future.error("界面未实现OnRefresh");
+  static Future<String> Function(CancelToken? cancelToken) onUrlFetchRequest =
+      (_) => Future.error("界面未实现OnRefresh");
   static String htmlEncode(String text) {
     var url = text.replaceAll(r"\/", "<傻wf逼sdf义1>");
     url = url.replaceAll(r"\;", "<傻wf逼sdf义2>");
@@ -116,10 +117,7 @@ class WiseLaunchAdapter {
     if (parame.containsKey("s.md.content")) {
       showAnimatePage(
         context,
-        MarkDownPage(
-            title: title,
-            content: parame["s.md.content"] ?? "",
-            onRefresh: onUrlFetchRequest),
+        MarkDownPage(title: title, content: parame["s.md.content"] ?? ""),
         replace: replace ?? false,
         fullscreenDialog: false,
       );
@@ -130,8 +128,7 @@ class WiseLaunchAdapter {
       //强制使用markdown协议解析网址
       showAnimatePage(
         context,
-        MarkDownPage(
-            title: title, content: "", url: url, onRefresh: onUrlFetchRequest),
+        MarkDownPage(title: title, content: "", url: url),
         replace: replace ?? false,
         fullscreenDialog: false,
       );
@@ -139,8 +136,7 @@ class WiseLaunchAdapter {
       //针对md结尾的，或者path以md结尾的，也强制转换了算球
       showAnimatePage(
         context,
-        MarkDownPage(
-            title: title, content: "", url: url, onRefresh: onUrlFetchRequest),
+        MarkDownPage(title: title, content: "", url: url),
         replace: replace ?? false,
         fullscreenDialog: false,
       );

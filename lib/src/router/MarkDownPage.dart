@@ -68,13 +68,12 @@ class MarkDownPage extends StatefulWidget {
   final String content;
   final String title;
   final String url;
-  final Future<String> Function() onRefresh;
 
-  MarkDownPage(
-      {required this.title,
-      required this.content,
-      this.url = "",
-      required this.onRefresh});
+  MarkDownPage({
+    required this.title,
+    required this.content,
+    this.url = "",
+  });
 
   @override
   _MarkDownPageState createState() => _MarkDownPageState();
@@ -178,7 +177,9 @@ class _MarkDownPageState extends State<MarkDownPage> {
       obj = obj.parent(({required child}) => RefreshIndicator(
             key: _refreshKey,
             // onRefresh: null,
-            onRefresh: () => widget.onRefresh().then((value) {
+            onRefresh: () =>
+                WiseLaunchAdapter.onUrlFetchRequest(_cancelToken)
+                    .then((value) {
               if (mounted && !_cancelToken.isCancelled) {
                 setState(() {
                   _con = value;

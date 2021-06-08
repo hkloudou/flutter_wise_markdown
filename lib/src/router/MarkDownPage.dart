@@ -1,21 +1,5 @@
 part of flutter_wise_markdown;
 
-extension StyledWidgetWiseMarkdown on Widget {
-  /// Applies a parent to a child
-  /// ```dart
-  /// final parentWidget = ({required Widget child}) => Styled.widget(child: child)
-  ///   .alignment(Alignment.center)
-  ///
-  /// final childWidget = Text('some text')
-  ///   .padding(all: 10)
-  ///
-  /// Widget build(BuildContext) => childWidget
-  ///   .parent(parentWidget);
-  /// ```
-  Widget parent(Widget Function({required Widget child}) parent) =>
-      parent(child: this);
-}
-
 class SubscriptBuilder extends MarkdownElementBuilder {
   static const List<String> _subscripts = [
     '₀',
@@ -174,23 +158,23 @@ class _MarkDownPageState extends State<MarkDownPage> {
       ),
     );
     if (widget.url.isNotEmpty) {
-      obj = obj.parent(({required child}) => RefreshIndicator(
-            key: _refreshKey,
-            // onRefresh: null,
-            onRefresh: () =>
-                WiseLaunchAdapter.onUrlFetchRequest(widget.url, _cancelToken)
-                    .then((value) {
-              if (mounted && !_cancelToken.isCancelled) {
-                setState(() {
-                  _con = value;
-                });
-              }
-            }).catchError((err) {
-              print("err:: Flutter_Wise_Markdown");
-              print(err);
-            }),
-            child: child,
-          ));
+      obj = RefreshIndicator(
+        key: _refreshKey,
+        // onRefresh: null,
+        onRefresh: () =>
+            WiseLaunchAdapter.onUrlFetchRequest(widget.url, _cancelToken)
+                .then((value) {
+          if (mounted && !_cancelToken.isCancelled) {
+            setState(() {
+              _con = value;
+            });
+          }
+        }).catchError((err) {
+          print("err:: Flutter_Wise_Markdown");
+          print(err);
+        }),
+        child: obj,
+      );
     }
     return Scaffold(
       appBar: AppBar(

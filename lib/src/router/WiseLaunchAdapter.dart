@@ -11,8 +11,8 @@ part of flutter_wise_markdown;
 // var onDataRefresh = FunctionFuture<String>()
 // typedef Future<String> Function({CancelToken? cancelToken});
 class WiseLaunchAdapter {
-  static Future<String> Function(CancelToken? cancelToken) onUrlFetchRequest =
-      (_) => Future.error("界面未实现OnRefresh");
+  static Future<String> Function(String url, CancelToken? cancelToken)
+      onUrlFetchRequest = (x, _) => Future.error("界面未实现OnRefresh");
   static String htmlEncode(String text) {
     var url = text.replaceAll(r"\/", "<傻wf逼sdf义1>");
     url = url.replaceAll(r"\;", "<傻wf逼sdf义2>");
